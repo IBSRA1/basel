@@ -1,0 +1,247 @@
+================================================================================
+        DISTANCE MEASUREMENT SYSTEM - WIRING DIAGRAM
+================================================================================
+
+PROJECT: HC-SR04 Ultrasonic Distance Sensor with I2C LCD Display
+MICROCONTROLLER: Arduino Uno
+DATE: October 2025
+
+================================================================================
+                        HARDWARE COMPONENTS LIST
+================================================================================
+
+1. Arduino Uno Board (1x)
+2. HC-SR04 Ultrasonic Sensor (1x)
+3. 16x2 I2C LCD Display Module - LCM1602 IIC (1x)
+4. Breadboard (optional for prototyping) (1x)
+5. Jumper Wires:
+   - Male to Male (6x minimum)
+   - Male to Female (if needed for sensor)
+6. USB Cable (for Arduino power and programming) (1x)
+
+================================================================================
+                    COMPONENT PIN CONFIGURATIONS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         HC-SR04 ULTRASONIC SENSOR                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Pin Name  │  Function                    │  Connection                    │
+├────────────┼──────────────────────────────┼────────────────────────────────┤
+│    VCC     │  Power Supply (+5V)          │  Arduino 5V                    │
+│    TRIG    │  Trigger Input               │  Arduino Digital Pin 9         │
+│    ECHO    │  Echo Output                 │  Arduino Digital Pin 10        │
+│    GND     │  Ground                      │  Arduino GND                   │
+└────────────┴──────────────────────────────┴────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      16x2 I2C LCD DISPLAY MODULE                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Pin Name  │  Function                    │  Connection                    │
+├────────────┼──────────────────────────────┼────────────────────────────────┤
+│    VCC     │  Power Supply (+5V)          │  Arduino 5V                    │
+│    GND     │  Ground                      │  Arduino GND                   │
+│    SDA     │  I2C Data Line               │  Arduino A4 (SDA)              │
+│    SCL     │  I2C Clock Line              │  Arduino A5 (SCL)              │
+└────────────┴──────────────────────────────┴────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          ARDUINO UNO PINS USED                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Arduino Pin │  Connected To               │  Purpose                       │
+├─────────────┼─────────────────────────────┼────────────────────────────────┤
+│     5V      │  HC-SR04 VCC, LCD VCC       │  Power Supply                  │
+│     GND     │  HC-SR04 GND, LCD GND       │  Common Ground                 │
+│  Digital 9  │  HC-SR04 TRIG               │  Trigger ultrasonic pulse      │
+│  Digital 10 │  HC-SR04 ECHO               │  Receive echo signal           │
+│  A4 (SDA)   │  LCD SDA                    │  I2C Data Communication        │
+│  A5 (SCL)   │  LCD SCL                    │  I2C Clock Communication       │
+└─────────────┴─────────────────────────────┴────────────────────────────────┘
+
+================================================================================
+                        DETAILED WIRING CONNECTIONS
+================================================================================
+
+STEP-BY-STEP WIRING INSTRUCTIONS:
+
+POWER CONNECTIONS:
+------------------
+1. Arduino 5V Pin    ───→  HC-SR04 VCC Pin
+2. Arduino 5V Pin    ───→  LCD Module VCC Pin
+3. Arduino GND Pin   ───→  HC-SR04 GND Pin
+4. Arduino GND Pin   ───→  LCD Module GND Pin
+
+   NOTE: You may need to use a breadboard to split power rails if connecting
+         multiple devices to the same 5V and GND pins.
+
+HC-SR04 SENSOR CONNECTIONS:
+---------------------------
+5. Arduino Pin 9     ───→  HC-SR04 TRIG Pin (Trigger Signal)
+6. Arduino Pin 10    ───→  HC-SR04 ECHO Pin (Echo Signal)
+
+I2C LCD DISPLAY CONNECTIONS:
+----------------------------
+7. Arduino Pin A4    ───→  LCD SDA Pin (I2C Data)
+8. Arduino Pin A5    ───→  LCD SCL Pin (I2C Clock)
+
+   NOTE: On some Arduino boards, dedicated SDA/SCL pins are available
+         separate from A4/A5. Either connection method works.
+
+================================================================================
+                            ASCII WIRING DIAGRAM
+================================================================================
+
+                    ┌─────────────────────────┐
+                    │     HC-SR04 SENSOR      │
+                    │   ┌───┐ ┌───┐          │
+                    │   │ T │ │ R │          │  T = Transmitter
+                    │   │ X │ │ X │          │  R = Receiver
+                    │   └───┘ └───┘          │
+                    │                         │
+                    │  VCC TRIG ECHO GND      │
+                    └───┬────┬────┬────┬─────┘
+                        │    │    │    │
+                   Red  │    │    │    │ Black
+                   Wire │    │    │    │ Wire
+                        │    │    │    │
+                ┌───────┴────┴────┴────┴──────────────┐
+                │       │    │    │    │              │
+                │  5V ──┘    │    │    └── GND        │
+                │            │    │                   │
+                │     D9 ────┘    └──── D10          │
+                │                                     │
+                │         ARDUINO UNO                 │
+                │                                     │
+                │     A4 ────┐    ┌──── A5           │
+                │            │    │                   │
+                │  5V ───┐   │    │   ┌── GND        │
+                └────────┼───┴────┴───┼───────────────┘
+                         │   │    │   │
+                         │   │    │   │
+                    ┌────┴───┴────┴───┴─────┐
+                    │  VCC SDA SCL GND       │
+                    │                        │
+                    │   ┌──────────────┐     │
+                    │   │              │     │
+                    │   │  I2C LCD     │     │
+                    │   │  16x2 Display│     │
+                    │   │              │     │
+                    │   └──────────────┘     │
+                    │   LCM1602 IIC Module   │
+                    └────────────────────────┘
+
+================================================================================
+                        CONNECTION SUMMARY TABLE
+================================================================================
+
+┌──────────────┬─────────────────┬─────────────────┬──────────────────────────┐
+│ Wire Color   │ From (Arduino)  │ To (Component)  │ Signal Type              │
+│ (Suggested)  │                 │                 │                          │
+├──────────────┼─────────────────┼─────────────────┼──────────────────────────┤
+│ Red          │ 5V              │ HC-SR04 VCC     │ Power (+5V)              │
+│ Red          │ 5V              │ LCD VCC         │ Power (+5V)              │
+│ Black        │ GND             │ HC-SR04 GND     │ Ground (0V)              │
+│ Black        │ GND             │ LCD GND         │ Ground (0V)              │
+│ Yellow       │ Pin 9           │ HC-SR04 TRIG    │ Digital Output (Trigger) │
+│ Green        │ Pin 10          │ HC-SR04 ECHO    │ Digital Input (Echo)     │
+│ Blue         │ A4 (SDA)        │ LCD SDA         │ I2C Data (Bidirectional) │
+│ White        │ A5 (SCL)        │ LCD SCL         │ I2C Clock                │
+└──────────────┴─────────────────┴─────────────────┴──────────────────────────┘
+
+================================================================================
+                        BREADBOARD LAYOUT (OPTIONAL)
+================================================================================
+
+If using a breadboard for neater connections:
+
+1. Place Arduino Uno beside breadboard
+2. Connect Arduino 5V to breadboard positive (+) rail (Red)
+3. Connect Arduino GND to breadboard negative (-) rail (Black/Blue)
+4. Place HC-SR04 sensor on breadboard
+5. Mount I2C LCD on breadboard or keep separate
+
+BREADBOARD POWER RAILS:
+   Positive Rail (+) ─── Arduino 5V  ─┬─ HC-SR04 VCC
+                                      └─ LCD VCC
+
+   Negative Rail (-) ─── Arduino GND ─┬─ HC-SR04 GND
+                                      └─ LCD GND
+
+================================================================================
+                    IMPORTANT NOTES AND PRECAUTIONS
+================================================================================
+
+⚠ VOLTAGE WARNING:
+   - HC-SR04 operates at 5V. DO NOT connect to 3.3V systems directly.
+   - Ensure all components share common ground (GND).
+
+⚠ I2C ADDRESS:
+   - Default I2C LCD address is usually 0x27 or 0x3F
+   - Run I2C scanner sketch if LCD doesn't display
+   - Adjust address in code if needed: LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+⚠ WIRING CHECKS:
+   - Double-check all connections before powering on
+   - Ensure no short circuits between VCC and GND
+   - Verify correct pin numbers (D9, D10, A4, A5)
+
+⚠ SENSOR PLACEMENT:
+   - Mount HC-SR04 facing the target object
+   - Keep sensor level and stable for accurate readings
+   - Avoid soft materials (absorb sound) and extreme angles
+   - Optimal range: 2 cm to 400 cm
+
+⚠ LCD CONTRAST:
+   - If LCD shows no text, adjust contrast potentiometer on I2C module
+   - Usually located on back of LCD module (small blue screw)
+   - Turn clockwise/counterclockwise until text is visible
+
+⚠ POWER SUPPLY:
+   - USB power (5V) is sufficient for this project
+   - If using external power: 7-12V DC to Arduino VIN pin
+   - Total current draw: ~100mA (well within USB limits)
+
+================================================================================
+                        TESTING PROCEDURE
+================================================================================
+
+1. VISUAL INSPECTION:
+   □ Check all wire connections match diagram
+   □ Verify no loose connections
+   □ Ensure correct polarity (VCC to 5V, GND to GND)
+
+2. POWER ON TEST:
+   □ Connect Arduino to computer via USB
+   □ LCD backlight should illuminate
+   □ No smoke or burning smell (if present, disconnect immediately)
+
+3. UPLOAD CODE:
+   □ Upload the distance measurement code to Arduino
+   □ Open Serial Monitor (9600 baud rate)
+
+4. FUNCTIONAL TEST:
+   □ LCD should show welcome message
+   □ Distance readings should appear on LCD
+   □ Move hand in front of sensor (2-400 cm range)
+   □ Readings should change accordingly
+   □ Serial Monitor should display same values
+
+5. TROUBLESHOOTING:
+   □ No LCD display: Check I2C address, adjust contrast
+   □ Wrong readings: Check TRIG/ECHO connections
+   □ No readings: Verify sensor VCC and GND connections
+
+================================================================================
+                        ADDITIONAL RESOURCES
+================================================================================
+
+HC-SR04 Datasheet: Operating voltage, timing diagrams, specifications
+Arduino I2C Guide: Understanding SDA/SCL communication
+LiquidCrystal_I2C Library: Installation and usage instructions
+
+For technical support and project updates, refer to Arduino community forums
+and official documentation.
+
+================================================================================
+                            END OF WIRING DIAGRAM
+================================================================================
